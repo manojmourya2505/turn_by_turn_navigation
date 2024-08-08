@@ -15,12 +15,15 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+        with:
+          node-version: '20'
 
       - name: Set up JDK
         uses: actions/setup-java@v3
         with:
           distribution: 'temurin' # or 'zulu', 'adopt', etc.
-          java-version: '8'
+          java-version: '11'
+          cache: gradle
 
       - name: Build with Gradle
-        run: ./gradlew build
+        run: ./gradlew build test connectedAndroidTest
