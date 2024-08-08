@@ -19,7 +19,8 @@ jobs:
       - name: Set up JDK
         uses: actions/setup-java@v3
         with:
-          java-version: '18'
+          distribution: 'temurin' # or 'zulu', 'adopt', etc.
+          java-version: '11'
 
       - name: Build with Gradle
         run: ./gradlew build
