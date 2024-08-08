@@ -15,15 +15,24 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-        with:
-          node-version: '20'
 
       - name: Set up JDK
         uses: actions/setup-java@v3
         with:
-          distribution: 'temurin' # or 'zulu', 'adopt', etc.
+          distribution: 'temurin'
           java-version: '17'
-          cache: gradle
 
-      - name: Build with Gradle
-        run: ./gradlew build test connectedAndroidTest
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v2
+
+      - name: Start Android Emulator
+        uses: android-actions/emulator-runner@v2
+        with:
+          api-level: 30 # Adjust to the SDK level you're targeting
+          target: default
+          arch: x86_64
+          profile: Nexus_5X
+          script: echo "Emulator started"
+
+      - name: Build and test with Gradle
+        run: ./gradlew build test connectedDebugAndroidTest
